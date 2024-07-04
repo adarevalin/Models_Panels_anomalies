@@ -35,7 +35,7 @@ model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
 
 model.add(Flatten())
 model.add(Dense(units=120, activation='relu'))
-model.add(Dense(units=84, activation='relu'))
+
 model.add(Dropout(0.5))  # Capa de Dropout para regularización
 
 model.add(Dense(units=12, activation='softmax'))
