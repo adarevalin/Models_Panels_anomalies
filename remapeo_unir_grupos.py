@@ -8,6 +8,7 @@ Original file is located at
 """
 
 # Mapeo de clases originales a nuevos grupos
+## Nota: para utilizar este remapeo es necesario ajustar el modelo al final con 8 posibles grupos ya que se unen grupos
 class_mapping = {
     'Vegetation': 'Shadowing',
     'Shadowing': 'Shadowing',
