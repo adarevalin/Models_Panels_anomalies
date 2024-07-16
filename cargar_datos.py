@@ -7,18 +7,27 @@ from tensorflow.keras.utils import to_categorical, Sequence
 import cv2
 import matplotlib.pyplot as plt
 from utils.carga_metadatos import cargar_metadatos
+import pickle
+
+
 # Función para obtener etiquetas one-hot
 def get_one_hot_labels(keys, metadata, label_encoder, num_classes):
     # Obtiene las etiquetas de clase de anomalía a partir de los metadatos usando las claves proporcionadas
     labels = [metadata[key]['anomaly_class'] for key in keys]
     # Codifica las etiquetas usando el codificador de etiquetas proporcionado
     labels_encoded = label_encoder.transform(labels)
-    # Convierte las etiquetas codificadas a formato one-hot
+    
+
+    # Guarda el LabelEncoder
+    with open('label_encoder.pkl', 'wb') as file:
+        pickle.dump(label_encoder, file)
+    print("LabelEncoder guardado en formato .pkl.")
+        # Convierte las etiquetas codificadas a formato one-hot
     return to_categorical(labels_encoded, num_classes=num_classes)
 
 # Clase para generar datos en lotes de manera secuencial
 class DataGenerator(Sequence):
-    def __init__(self, keys, metadata, image_folder, label_encoder, num_classes=12, batch_size=16, dim=(40, 24), n_channels=1, shuffle=True):
+    def __init__(self, keys, metadata, image_folder, label_encoder, num_classes=12, batch_size=32, dim=(40, 24), n_channels=1, shuffle=True):
         # Inicializa los parámetros del generador de datos
         self.keys = keys
         self.metadata = metadata
@@ -107,6 +116,9 @@ def obtener_generadores(path_file, image_folder, batch_size=32, test_size=0.2, r
     test_generator = DataGenerator(test_keys, metadata, image_folder, label_encoder, num_classes, batch_size=batch_size, shuffle=False)
 
     return train_generator, test_generator
+
+
+
 
 
 # ###################### Esto simplemente es para visualizar, descomentar si es el caso #########################
