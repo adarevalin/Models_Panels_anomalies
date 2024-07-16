@@ -16,11 +16,11 @@ class MyApp(QMainWindow):
         self.model = load_model(r'C:\\Users\\Public\\Proyectos\\modelo_panel_solar\\app\\model_066.h5')
 
         # Cargar el LabelEncoder
-        with open(r'C:\\Users\\Public\\Proyectos\\modelo_panel_solar\\app\\model_params.pkl', 'rb') as file:
+        with open(r'C:\\Users\\Public\\Proyectos\\modelo_panel_solar\\app\\label_encoder.pkl', 'rb') as file:
             self.label_encoder = pickle.load(file)
 
         # Cargar el logo
-        self.ui.logoLabel.setPixmap(QPixmap(r'C:\\Users\\Public\\Proyectos\\modelo_panel_solar\\app\\logo.png').scaled(200, 50, aspectRatioMode=1))
+        self.ui.logoLabel.setPixmap(QPixmap(r'C:\\Users\\Public\\Proyectos\\modelo_panel_solar\\app\\logo.png').scaled(100, 100, aspectRatioMode=3))
 
         # Conectar el botón de carga de imagen
         self.ui.loadButton.clicked.connect(self.load_image)
@@ -50,7 +50,7 @@ class MyApp(QMainWindow):
                 background-color: #45a049;
             }
             QLabel {
-                font-size: 14px;
+                font-size: 16px;
             }
         """)
 
@@ -70,13 +70,10 @@ class MyApp(QMainWindow):
             prediction = self.model.predict(input_data)
             predicted_class = np.argmax(prediction)
             predicted_label = self.label_encoder.inverse_transform([predicted_class])[0]
-            print(predicted_label)
-            # # Mostrar predicción en la etiqueta y en la consola
-            # self.ui.predictionLabel.setText(f'Prediction: {predicted_label}')
-            # print(f'Prediction: {predicted_label}')
+            self.ui.predictionLabel.setText(f'Prediction: {predicted_label}')
+
         except Exception as e:
             self.ui.predictionLabel.setText(f'Error: {e}')
-            print(f'Error: {e}')
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)

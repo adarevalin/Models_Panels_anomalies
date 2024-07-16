@@ -11,13 +11,14 @@ class Ui_MainWindow(object):
 
         # Logo
         self.logoLabel = QtWidgets.QLabel(self.centralwidget)
-        self.logoLabel.setGeometry(QtCore.QRect(50, 10, 300, 50))  # Ajusta el tamaño del logo
+        self.logoLabel.setGeometry(QtCore.QRect(50, 10, 300, 50))  # Ajusta el tamaño del logo (ancho x alto)
         self.logoLabel.setAlignment(QtCore.Qt.AlignCenter)  # Centra el contenido
         self.logoLabel.setObjectName("logoLabel")
 
         self.loadButton = QtWidgets.QPushButton(self.centralwidget)
-        self.loadButton.setGeometry(QtCore.QRect(100, 80, 200, 50))  # Centra el botón
+        self.loadButton.setGeometry(QtCore.QRect(100, 80, 200, 60))  # Ajusta el tamaño del botón
         self.loadButton.setObjectName("loadButton")
+        self.loadButton.setFont(QtGui.QFont("Arial", 12))  # Ajusta la fuente del botón
 
         self.imageLabel = QtWidgets.QLabel(self.centralwidget)
         self.imageLabel.setGeometry(QtCore.QRect(50, 150, 300, 300))  # Centra la imagen
@@ -28,6 +29,7 @@ class Ui_MainWindow(object):
         self.predictionLabel.setGeometry(QtCore.QRect(50, 470, 300, 50))  # Centra la etiqueta de predicción
         self.predictionLabel.setAlignment(QtCore.Qt.AlignCenter)  # Centra el contenido
         self.predictionLabel.setObjectName("predictionLabel")
+        self.predictionLabel.setFont(QtGui.QFont("Arial", 14, QtGui.QFont.Bold))  # Fuente en negrita y tamaño 14
 
         MainWindow.setCentralWidget(self.centralwidget)
         self.retranslateUi(MainWindow)

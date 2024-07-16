@@ -5,10 +5,8 @@ from sklearn.preprocessing import LabelEncoder
 from sklearn.model_selection import train_test_split
 from tensorflow.keras.utils import to_categorical, Sequence
 import cv2
-import matplotlib.pyplot as plt
 from utils.carga_metadatos import cargar_metadatos
 import pickle
-
 
 # Función para obtener etiquetas one-hot
 def get_one_hot_labels(keys, metadata, label_encoder, num_classes):
@@ -16,13 +14,7 @@ def get_one_hot_labels(keys, metadata, label_encoder, num_classes):
     labels = [metadata[key]['anomaly_class'] for key in keys]
     # Codifica las etiquetas usando el codificador de etiquetas proporcionado
     labels_encoded = label_encoder.transform(labels)
-    
-
-    # Guarda el LabelEncoder
-    with open('label_encoder.pkl', 'wb') as file:
-        pickle.dump(label_encoder, file)
-    print("LabelEncoder guardado en formato .pkl.")
-        # Convierte las etiquetas codificadas a formato one-hot
+    # Convierte las etiquetas codificadas a formato one-hot
     return to_categorical(labels_encoded, num_classes=num_classes)
 
 # Clase para generar datos en lotes de manera secuencial
@@ -76,7 +68,6 @@ class DataGenerator(Sequence):
 
         return X, y
 
-
 # Función para balancear las clases
 def balancear_clases(metadata, label_encoder):
     all_labels = [metadata[key]['anomaly_class'] for key in metadata.keys()]
@@ -115,10 +106,7 @@ def obtener_generadores(path_file, image_folder, batch_size=32, test_size=0.2, r
     train_generator = DataGenerator(train_keys, metadata, image_folder, label_encoder, num_classes, batch_size=batch_size, shuffle=True)
     test_generator = DataGenerator(test_keys, metadata, image_folder, label_encoder, num_classes, batch_size=batch_size, shuffle=False)
 
-    return train_generator, test_generator
-
-
-
+    return train_generator, test_generator, label_encoder, num_classes
 
 
 # ###################### Esto simplemente es para visualizar, descomentar si es el caso #########################
